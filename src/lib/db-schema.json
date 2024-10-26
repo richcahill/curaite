@@ -1,0 +1,47 @@
+{
+  "User": {
+    "type": "object",
+    "properties": {
+      "email": { "type": "string", "format": "email" },
+      "uuid": { "type": "string", "unique": true }
+    },
+    "required": ["email", "uuid"]
+  },
+  "Project": {
+    "type": "object",
+    "properties": {
+      "projectId": { "type": "string", "unique": true }
+    },
+    "required": ["projectId"]
+  },
+  "AssetType": {
+    "type": "string",
+    "enum": ["image", "video", "text", "pdf", "url", "blogPost"]
+  },
+  "Asset": {
+    "type": "object",
+    "properties": {
+      "asset": { "type": "string" },
+      "type": { "$ref": "#/AssetType" },
+      "storageUrl": { "type": "string", "format": "uri" },
+      "tags": { "type": "array", "items": { "type": "string" } },
+      "content": { "type": "string" },
+      "detectedText": { "type": "string" },
+      "llmDescription": { "type": "string" }
+    },
+    "required": ["asset", "type", "storageUrl"]
+  },
+  "AssetLibrary": {
+    "type": "object",
+    "properties": {
+      "uuid": { "type": "string", "unique": true },
+      "ownerUserId": { "type": "string", "ref": "User.uuid" },
+      "collaborators": {
+        "type": "array",
+        "items": { "type": "string", "ref": "User.uuid" }
+      },
+      "assets": { "type": "array", "items": { "$ref": "#/Asset" } }
+    },
+    "required": ["uuid", "ownerUserId", "assets"]
+  }
+}

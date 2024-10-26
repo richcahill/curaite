@@ -27,4 +27,4 @@ type AssetLibrary = {
   assets: Asset[];
 };
 
-export type { User, Project, Asset, AssetLibrary };
+export type { User, Project, Asset, AssetLibrary, AssetType };
