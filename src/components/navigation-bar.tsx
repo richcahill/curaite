@@ -1,15 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./media/logo";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Package, FileImage } from "lucide-react";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
 
 const NavigationBar: React.FC = () => {
-  const handleSignOut = () => {
-    // Logic for signing out the user
-    console.log("User signed out");
+  const router = useRouter();
+  const [user, setUser] = useState<string | null>(null);
+
+  useEffect(() => {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+    if (user) {
+      setUser(user.email!);
+    }
+  }, []);
+
+  const handleSignOut = async () => {
+    await signOut(getAuth(app));
+
+    await fetch("/api/logout");
+
+    router.push("/login");
   };
 
   const linkStyle =
@@ -34,7 +51,8 @@ const NavigationBar: React.FC = () => {
             <p className="">Projects</p>
           </Link>
         </div>
-        <div className="text-right">
+        <div className="text-right flex items-center justify-end gap-2">
+          {user && <p className="text-sm text-gray-500">{user}</p>}
           <Button
             onClick={handleSignOut}
             className=" bg-white text-gray-900 shadow-none hover:bg-gray-200 hover:text-gray-950 transition-all"

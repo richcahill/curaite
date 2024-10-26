@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
-import NavigationBar from "@/components/navigation-bar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,11 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`h-screen w-screen flex flex-col ${geistSans.variable} ${geistMono.variable} sans`}
-      >
-        <NavigationBar />
-        <div className="flex-grow overflow-y-auto">{children}</div>
+      <body className={`${geistSans.variable} ${geistMono.variable} sans`}>
+        {children}
         <Analytics />
       </body>
     </html>
