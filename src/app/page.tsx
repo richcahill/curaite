@@ -1,7 +1,11 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1>Hello World</h1>
+    <div className="flex h-full flex-col items-center justify-center p-8 pb-20 gap-16 sm:p-20">
+      <Button className="text-5xl font-semibold px-14 py-12 rounded-full">
+        Create Portfolio
+      </Button>
     </div>
   );
 }
