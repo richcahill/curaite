@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
+
 import "./globals.css";
 import NavigationBar from "@/components/navigation-bar";
 
@@ -31,6 +33,7 @@ export default function RootLayout({
       >
         <NavigationBar />
         <div className="flex-grow overflow-y-auto">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
