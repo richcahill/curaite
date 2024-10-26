@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen w-screen flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-geist-sans)]`}
+        className={`h-screen w-screen flex flex-col ${geistSans.variable} ${geistMono.variable} sans`}
       >
         <NavigationBar />
         <div className="flex-grow overflow-y-auto">{children}</div>

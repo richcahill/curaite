@@ -4,28 +4,33 @@ import React from "react";
 import Logo from "./media/logo";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { Package, FileImage } from "lucide-react";
+
 const NavigationBar: React.FC = () => {
   const handleSignOut = () => {
     // Logic for signing out the user
     console.log("User signed out");
   };
 
-  const linkStyle = "text-gray-500 hover:text-gray-950 transition-all";
+  const linkStyle =
+    "text-gray-500 hover:text-gray-950 transition-all flex gap-2 items-center px-2 py-1 hover:bg-gray-100 rounded-full";
 
   return (
     <div className="max-w-3xl w-full mx-auto p-2">
       <nav className="grid grid-cols-3 justify-between items-center pl-4 p-2 w-full  rounded-full">
         <div className="logo">
           <Link href="/">
-            <Logo className="text-gray-400 h-7 w-7 hover:scale-105 hover:text-gray-900 transition-all dark:text-gray-50" />
+            <Logo className="text-violet-500 h-7 w-7 hover:scale-105 hover:text-violet-400 transition-all dark:text-gray-50" />
           </Link>
         </div>
 
-        <div className="flex justify-center text-sm gap-4">
+        <div className="flex justify-center text-sm gap-1">
           <Link href="/assets" className={linkStyle}>
+            <FileImage className="w-4 h-4" />
             <p className="">Assets</p>
           </Link>
           <Link href="/projects" className={linkStyle}>
+            <Package className="w-4 h-4" />
             <p className="">Projects</p>
           </Link>
         </div>
