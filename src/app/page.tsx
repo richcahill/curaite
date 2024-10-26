@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import Logo from "@/components/media/logo";
 
 export default function Home() {
-  // TODO: redirect to /app if user is logged in
-
   return (
     // TODO: add a nice... interactive(?) background
     <main className="flex min-h-screen flex-col items-center justify-center p-8">

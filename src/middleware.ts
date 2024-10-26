@@ -2,8 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   authMiddleware,
-  redirectToHome,
   redirectToLogin,
+  redirectToPath,
 } from "next-firebase-auth-edge";
 import { clientConfig, serverConfig } from "@/lib/config";
 
@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
     handleValidToken: async ({ token, decodedToken, customToken }, headers) => {
       // Authenticated user should not be able to access /login, /register and /reset-password routes
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        return redirectToHome(request);
+        return redirectToPath(request, "/app");
       }
 
       return NextResponse.next({
