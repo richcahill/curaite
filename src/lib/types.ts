@@ -5,11 +5,14 @@ type User = {
 
 type Project = {
   projectId: string;
+  // TODO: add more project metadata
 };
+
+type AssetType = "image" | "video" | "text" | "pdf" | "url" | "blogPost";
 
 type Asset = {
   asset: string;
-  type: string;
+  type: AssetType;
   storageUrl: string;
   tags?: string[];
   content?: string;
