@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import {
   authMiddleware,
@@ -22,9 +23,6 @@ export async function middleware(request: NextRequest) {
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
         return redirectToHome(request);
       }
-      console.log("token", token);
-      console.log("decodedToken", decodedToken);
-      console.log("customToken", customToken);
 
       return NextResponse.next({
         request: {
