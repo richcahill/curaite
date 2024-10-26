@@ -1,5 +1,5 @@
 {
-  "name": "curat.io",
+  "name": "curaite",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "firebase": "^11.0.1",
     "lucide-react": "^0.453.0",
     "next": "15.0.1",
     "react": "19.0.0-rc-69d4b800-20241021",
