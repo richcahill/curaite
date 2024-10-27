@@ -36,17 +36,17 @@ const NavigationBar: React.FC = () => {
     <div className="max-w-3xl w-full mx-auto p-2">
       <nav className="grid grid-cols-3 justify-between items-center pl-4 p-2 w-full  rounded-full">
         <div className="logo">
-          <Link href="/">
+          <Link href="/app">
             <Logo className="text-violet-500 h-7 w-7 hover:scale-105 hover:text-violet-400 transition-all dark:text-gray-50" />
           </Link>
         </div>
 
         <div className="flex justify-center text-sm gap-1">
-          <Link href="/assets" className={linkStyle}>
+          <Link href="/app/assets" className={linkStyle}>
             <FileImage className="w-4 h-4" />
             <p className="">Assets</p>
           </Link>
-          <Link href="/projects" className={linkStyle}>
+          <Link href="/app/projects" className={linkStyle}>
             <Package className="w-4 h-4" />
             <p className="">Projects</p>
           </Link>
