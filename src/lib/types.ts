@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 type User = {
   email: string;
   uuid: string;
@@ -8,12 +10,14 @@ type Project = {
   // TODO: add more project metadata
 };
 
-type AssetType = "image" | "video" | "text" | "pdf" | "url" | "blogPost";
+type AssetType = "image/jpeg" | "image/png" | "image/gif" | "application/pdf";
 
 type Asset = {
+  id?: string;
   asset: string;
   type: AssetType;
   storageUrl: string;
+  createdAt: Timestamp;
   tags?: string[];
   content?: string;
   detectedText?: string;
