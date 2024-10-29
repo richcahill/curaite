@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "uuid": { "type": "string" },
+    "ownerUserId": { "type": "string" },
+    "collaborators": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Asset"
+      }
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "readingTime": { "type": "number" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "thumbnailUrl": { "type": "string" },
+    "published": { "type": "boolean" }
+  },
+  "required": [
+    "uuid",
+    "ownerUserId",
+    "assets",
+    "title",
+    "description",
+    "published"
+  ],
+  "definitions": {
+    "Asset": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "asset": { "type": "string" },
+        "type": { "type": "string" },
+        "storageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "content": { "type": "string" },
+        "detectedText": { "type": "string" },
+        "llmDescription": { "type": "string" }
+      },
+      "required": ["asset", "type", "storageUrl", "createdAt"]
+    }
+  }
+}
