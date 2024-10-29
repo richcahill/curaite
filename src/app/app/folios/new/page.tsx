@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect, useCallback } from "react";
 import { Wand } from "lucide-react";
-import { ReadingTime, Folio } from "@/lib/types";
+import { ReadingTime } from "@/lib/types";
 import {
   Select,
   SelectContent,
@@ -17,9 +17,11 @@ import {
 import { z } from "zod";
 import { auth, firestore } from "@/lib/firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 export default function NewFolio() {
   const user = auth.currentUser;
+  const router = useRouter();
   // Define Zod schema for form validation
   const folioSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -42,7 +44,6 @@ export default function NewFolio() {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedFolio, setGeneratedFolio] = useState<Folio | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const readingTimes = [
@@ -111,7 +112,8 @@ export default function NewFolio() {
             collection(firestore, `folios/${user?.uid}/folios`)
           );
           await setDoc(folioDoc, data.folio);
-          setGeneratedFolio(data.folio);
+          // push the user to the new path
+          router.push(`/app/folios/${data.folio.uuid}`);
         } catch (error) {
           console.error("Error saving folio to Firestore:", error);
           setError("An error occurred while saving the folio.");
@@ -205,14 +207,6 @@ export default function NewFolio() {
             <Wand className="w-4 h-4" />
           </Button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
-          {generatedFolio && (
-            <div className="mt-4">
-              <h2 className="text-2xl font-medium">Generated Folio:</h2>
-              <pre className="bg-gray-100 p-4 rounded">
-                {JSON.stringify(generatedFolio, null, 2)}
-              </pre>
-            </div>
-          )}
         </div>
       </div>
     </div>

@@ -67,15 +67,22 @@ export default function FolioDetail({ folioUuid }: { folioUuid: string }) {
 
       <div className="flex flex-col flex-grow items-start justify-center gap-2 bg-gray-50 rounded-lg p-4 w-full">
         <h2 className="text-2xl">{folio?.title}</h2>
-        <div className="text-sm text-gray-500">{folio?.description}</div>
+        <div className="text-sm text-gray-500 max-w-prose">
+          {folio?.description}
+        </div>
         <div className="flex flex-row gap-2">
-          {folio?.tags?.map((tag) => (
-            <div key={tag}>{tag}</div>
+          {folio?.tags?.map((tag, index) => (
+            <div
+              key={index}
+              className="bg-gray-200 rounded-full text-xs px-2 py-1 lowercase"
+            >
+              {tag}
+            </div>
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          {folio?.assets?.map((item) => (
-            <div key={item.id}>
+        <div className="grid grid-cols-2 gap-2 mt-8">
+          {folio?.assets?.map((item, index) => (
+            <div key={index}>
               {item.type === AssetType.Image.toString() ? (
                 <Image
                   src={item.storageUrl || ""}
