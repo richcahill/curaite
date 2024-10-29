@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "./media/logo";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Package, FileImage } from "lucide-react";
+import { Package, FileImage, LogOut } from "lucide-react";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -69,10 +69,10 @@ const NavigationBar: React.FC = () => {
           <Button
             onClick={handleSignOut}
             className=" bg-white text-gray-900 shadow-none hover:bg-gray-200 hover:text-gray-950 transition-all"
-            size="sm"
+            size="icon"
             variant="ghost"
           >
-            Sign Out
+            <LogOut className="w-4 h-4" />
           </Button>
         </div>
       </nav>

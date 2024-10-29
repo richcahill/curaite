@@ -19,6 +19,7 @@ const FileUpload = () => {
   const user = auth.currentUser;
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<string>("");
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -102,12 +103,14 @@ const FileUpload = () => {
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    setIsDragging(false);
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     handleFileUpload(file);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    setIsDragging(true);
     event.preventDefault();
   };
 
@@ -117,13 +120,19 @@ const FileUpload = () => {
         onClick={handleBoxClick}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="border border-dashed border-gray-300 rounded-md p-4 h-24 flex flex-col items-center justify-center text-center text-sm text-gray-500 cursor-pointer"
+        className={`border border-dashed border-gray-300 transition-colors duration-300 rounded-md p-4 h-24 flex flex-col items-center justify-center text-center text-sm text-gray-500 cursor-pointer ${
+          isDragging ? "border-violet-500 bg-violet-50" : ""
+        }`}
       >
         {progress > 0 ? (
           <Progress value={progress} max={100} className="max-w-56" />
         ) : (
           <>
-            <p>Drag and drop or click to select files</p>
+            {isDragging ? (
+              <p>Drop files to upload</p>
+            ) : (
+              <p>Drag and drop or click to upload new files</p>
+            )}
             <div className="text-center">{error && <p>Error: {error}</p>}</div>
           </>
         )}

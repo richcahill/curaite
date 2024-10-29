@@ -79,6 +79,7 @@ const AssetLibrary = () => {
         </div>
       </div>
       {/* assets */}
+      {/* TODO proper search filter here and use the types for the type sorting */}
       <div className="w-full">
         <div className="columns-2 md:columns-3 gap-x-4">
           {assets
