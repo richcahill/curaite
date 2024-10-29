@@ -3,7 +3,7 @@ import { type Folio } from "@/lib/types";
 import Link from "next/link";
 
 const FolioCard: React.FC<{ folio: Folio }> = ({ folio }) => {
-  console.log(folio.createdAt);
+  // TODO this could be designed to be far more folio-looking
 
   return (
     <Link href={`/app/folios/${folio.uuid}`}>
