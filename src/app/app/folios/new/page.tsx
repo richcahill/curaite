@@ -24,7 +24,10 @@ export default function NewFolio() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <Button size="lg" className="w-full flex justify-between">
+          <Button
+            size="lg"
+            className="w-full flex justify-between bg-violet-500"
+          >
             <div>Generate</div>
             <Wand className="w-4 h-4" />
           </Button>
