@@ -57,14 +57,31 @@ const AssetComponent: React.FC<{ asset: Asset }> = ({ asset }) => {
             <Trash2 className="w-4 h-4 text-white" />
           </button>
           <DialogTrigger>
-            <Image
-              src={asset.storageUrl}
-              alt={asset.asset}
-              width={800}
-              height={600}
-              layout="responsive"
-              className="w-full object-cover"
-            />
+            {asset.type === "video/mp4" ? (
+              <video
+                src={asset.storageUrl}
+                controls
+                className="w-full object-cover"
+              />
+            ) : asset.type === "application/pdf" ? (
+              <div className="flex items-center justify-center w-full h-full bg-gray-200">
+                <Button
+                  variant="secondary"
+                  onClick={() => window.open(asset.storageUrl, "_blank")}
+                >
+                  <div>Download PDF</div>
+                </Button>
+              </div>
+            ) : (
+              <Image
+                src={asset.storageUrl}
+                alt={asset.asset}
+                width={800}
+                height={600}
+                layout="responsive"
+                className="w-full object-cover"
+              />
+            )}
           </DialogTrigger>
         </div>
         <DialogContent className="max-h-[80vh] overflow-hidden p-2 max-w-4xl">
@@ -74,14 +91,31 @@ const AssetComponent: React.FC<{ asset: Asset }> = ({ asset }) => {
           <div className="w-full h-full relative">
             <div className="w-full h-full relative flex items-start overflow-y-auto">
               <div className="flex-1 h-full">
-                <Image
-                  src={asset.storageUrl}
-                  alt={asset.asset}
-                  width={400}
-                  height={600}
-                  layout="responsive"
-                  className="object-cover rounded-sm"
-                />
+                {asset.type === "video/mp4" ? (
+                  <video
+                    src={asset.storageUrl}
+                    controls
+                    className="object-cover rounded-sm"
+                  />
+                ) : asset.type === "application/pdf" ? (
+                  <div className="flex items-center justify-center w-full h-full bg-gray-200">
+                    <Button
+                      variant="secondary"
+                      onClick={() => window.open(asset.storageUrl, "_blank")}
+                    >
+                      <div>Download PDF</div>
+                    </Button>
+                  </div>
+                ) : (
+                  <Image
+                    src={asset.storageUrl}
+                    alt={asset.asset}
+                    width={400}
+                    height={600}
+                    layout="responsive"
+                    className="object-cover rounded-sm"
+                  />
+                )}
               </div>
               <div className="flex flex-col justify-between h-full gap-2 p-3 w-96">
                 <div className="flex flex-col gap-2 flex-grow">

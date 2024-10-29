@@ -32,7 +32,12 @@ type NewFolio = {
   readingTime: ReadingTime;
 };
 
-type AssetType = "image/jpeg" | "image/png" | "image/gif" | "application/pdf";
+type AssetType =
+  | "image/jpeg"
+  | "image/png"
+  | "image/gif"
+  | "video/mp4"
+  | "application/pdf";
 
 type Asset = {
   id?: string;
