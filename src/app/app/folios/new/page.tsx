@@ -74,6 +74,7 @@ export default function NewFolio() {
       audience,
       process,
       readingTime,
+      ownerUserId: user?.uid,
     };
 
     // Validate form data

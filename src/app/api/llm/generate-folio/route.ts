@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { Configuration, OpenAIApi } from "openai-edge";
+import { v4 as uuidv4 } from "uuid";
 
 // Initialize OpenAI Edge Configuration
 const configuration = new Configuration({
@@ -111,8 +112,16 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    // Extract ownerUserId from the request body
+    const { ownerUserId, ...folioData } = body;
+
     // Validate input data
-    const inputData = folioInputSchema.parse(body);
+    const inputData = folioInputSchema.parse(folioData);
+
+    // Generate UUID and timestamps
+    const uuid = uuidv4();
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
     // Prepare the prompt
     const prompt = `Generate a folio with the following details:
@@ -159,7 +168,6 @@ type Asset = {
 `;
 
     // Call OpenAI API with function calling
-    // TODO, we should probably use gpt-4o-mini to look at the assets first to classify and describe them. maybe even cluster them.
     const response = await openai.createChatCompletion({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
@@ -176,6 +184,12 @@ type Asset = {
     if (message.function_call) {
       const functionArgs = JSON.parse(message.function_call.arguments);
       const folioData = functionArgs.folio;
+
+      // Add generated uuid, timestamps, and ownerUserId to folioData
+      folioData.uuid = uuid;
+      folioData.createdAt = createdAt;
+      folioData.updatedAt = updatedAt;
+      folioData.ownerUserId = ownerUserId;
 
       // TODO validate the folio data with a zod schema
 
