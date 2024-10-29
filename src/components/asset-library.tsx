@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { firestore, auth } from "@/lib/firebase";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { collection, onSnapshot } from "firebase/firestore";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import AssetComponent from "./asset";
 
 import { type Asset } from "@/lib/types";
 import { Input } from "./ui/input";
@@ -53,15 +52,8 @@ const AssetLibrary = () => {
       }
     );
 
-    // Clean up the listener on component unmount
     return () => unsubscribe();
   }, []);
-
-  const deleteAsset = async (id: string) => {
-    if (!id) return;
-    const docRef = doc(firestore, `asset_library/${user?.uid}/files/${id}`);
-    await deleteDoc(docRef);
-  };
 
   return (
     <div className="space-y-4">
@@ -96,23 +88,7 @@ const AssetLibrary = () => {
             })
             .map((asset, index) => (
               <div key={index} className="mb-4 break-inside-avoid">
-                <div className="w-full group relative overflow-hidden rounded-md cursor-pointer">
-                  <div className="w-full h-full absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <button
-                    onClick={() => deleteAsset(asset.id ?? "")}
-                    className="w-8 h-8 hidden group-hover:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 absolute top-0 right-0 cursor-pointer"
-                  >
-                    <Trash2 className="w-4 h-4 text-white" />
-                  </button>
-                  <Image
-                    src={asset.storageUrl}
-                    alt={asset.asset}
-                    width={800}
-                    height={600}
-                    layout="responsive"
-                    className="w-full object-cover"
-                  />
-                </div>
+                <AssetComponent asset={asset} />
               </div>
             ))}
         </div>
