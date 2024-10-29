@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`h-screen w-screen flex flex-col`}>
+    <div className={`h-screen w-screen`}>
       <NavigationBar />
       <div className="flex-grow overflow-y-auto">{children}</div>
     </div>

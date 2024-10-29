@@ -122,7 +122,10 @@ const FileUpload = () => {
         {progress > 0 ? (
           <Progress value={progress} max={100} className="max-w-56" />
         ) : (
-          <p>Drag and drop or click to select files</p>
+          <>
+            <p>Drag and drop or click to select files</p>
+            <div className="text-center">{error && <p>Error: {error}</p>}</div>
+          </>
         )}
         <input
           type="file"
@@ -131,8 +134,6 @@ const FileUpload = () => {
           onChange={(e) => handleFileUpload(e.target.files?.[0] as File)}
         />
       </div>
-
-      <div className="text-center">{error && <p>Error: {error}</p>}</div>
     </div>
   );
 };
