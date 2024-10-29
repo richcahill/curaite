@@ -14,6 +14,10 @@ const AssetLibrary = () => {
   const [search, setSearch] = useState<string>("");
   const user = auth.currentUser;
 
+  const imageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  const videoTypes = ["video/mp4", "video/quicktime", "video/webm"];
+  const documentTypes = ["application/pdf"];
+
   useEffect(() => {
     // Reference to the 'assets' collection
     const assetsCollection = collection(
@@ -56,9 +60,9 @@ const AssetLibrary = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full">
       {/* filters */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between w-full">
         <Input
           placeholder="Search"
           value={search}
@@ -72,9 +76,18 @@ const AssetLibrary = () => {
             value={filter}
             onValueChange={(value) => setFilter(value)}
           >
-            <ToggleGroupItem value="all">All</ToggleGroupItem>
-            <ToggleGroupItem value="images">Images</ToggleGroupItem>
-            <ToggleGroupItem value="videos">Videos</ToggleGroupItem>
+            <ToggleGroupItem value="all" size="sm">
+              All
+            </ToggleGroupItem>
+            <ToggleGroupItem value="images" size="sm">
+              Images
+            </ToggleGroupItem>
+            <ToggleGroupItem value="videos" size="sm">
+              Videos
+            </ToggleGroupItem>
+            <ToggleGroupItem value="documents" size="sm">
+              Documents
+            </ToggleGroupItem>
           </ToggleGroup>
         </div>
       </div>
@@ -85,7 +98,11 @@ const AssetLibrary = () => {
           {assets
             .filter((asset) => {
               if (filter === "all") return true;
-              return asset.type === filter;
+              if (imageTypes.includes(asset.type)) return filter === "images";
+              if (videoTypes.includes(asset.type)) return filter === "videos";
+              if (documentTypes.includes(asset.type))
+                return filter === "documents";
+              return false;
             })
             .map((asset, index) => (
               <div key={index} className="mb-4 break-inside-avoid">
