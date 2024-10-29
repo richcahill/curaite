@@ -5,9 +5,19 @@ type User = {
   uuid: string;
 };
 
-type Project = {
-  projectId: string;
-  // TODO: add more project metadata
+type Folio = {
+  uuid: string;
+  ownerUserId: string;
+  collaborators?: string[];
+  assets: Asset[];
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  title: string;
+  description: string;
+  readingTime?: number;
+  tags?: string[];
+  thumbnailUrl?: string;
+  published: boolean;
 };
 
 type AssetType = "image/jpeg" | "image/png" | "image/gif" | "application/pdf";
@@ -31,4 +41,4 @@ type AssetLibrary = {
   assets: Asset[];
 };
 
-export type { User, Project, Asset, AssetLibrary, AssetType };
+export type { User, Folio, Asset, AssetLibrary, AssetType };

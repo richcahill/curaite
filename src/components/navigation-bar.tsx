@@ -32,10 +32,10 @@ const NavigationBar: React.FC = () => {
   };
 
   const linkStyle =
-    "text-gray-500 hover:text-gray-950 transition-all flex gap-2 items-center px-2 py-1 hover:bg-gray-100 rounded-full";
+    "text-gray-500 hover:text-gray-950 transition-all flex gap-2 items-center px-2 py-1 pr-3 hover:bg-gray-100 rounded-full";
 
   const activeLinkStyle =
-    "text-gray-950 bg-gray-100 rounded-full transition-all flex gap-2 items-center px-2 py-1";
+    "text-gray-950 bg-gray-100 rounded-full transition-all flex gap-2 items-center px-2 pr-3 py-1";
 
   return (
     <div className="max-w-3xl w-full mx-auto p-2 sticky top-0 z-50 bg-white/50 backdrop-blur-md">
@@ -55,13 +55,11 @@ const NavigationBar: React.FC = () => {
             <p className="">Assets</p>
           </Link>
           <Link
-            href="/app/projects"
-            className={
-              pathname === "/app/projects" ? activeLinkStyle : linkStyle
-            }
+            href="/app/folios"
+            className={pathname === "/app/folios" ? activeLinkStyle : linkStyle}
           >
             <Package className="w-4 h-4" />
-            <p className="">Projects</p>
+            <p className="">Folios</p>
           </Link>
         </div>
         <div className="text-right flex items-center justify-end gap-2">
