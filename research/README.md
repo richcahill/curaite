@@ -52,7 +52,9 @@ Users want control over how much detail to share. The tool should allow toggling
 
 > "Maybe toggles or drag and drop options for style, length... short, medium, long version of case studies."
 
-### Some Screenshots
+---
+
+### Screenshots
 
 ![image](./img/dan/1.png)
 ![image](./img/sunny/1.png)
