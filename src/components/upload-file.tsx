@@ -40,6 +40,7 @@ const FileUpload = () => {
       "image/png",
       "image/gif",
       "application/pdf",
+      "video/mp4",
     ];
     if (!allowedTypes.includes(file.type)) {
       setError("Invalid file type");

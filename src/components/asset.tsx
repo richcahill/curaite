@@ -4,7 +4,7 @@ import { auth, firestore } from "@/lib/firebase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { Trash2, Wand, Save } from "lucide-react";
+import { Trash2, Wand, Save, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -64,13 +64,8 @@ const AssetComponent: React.FC<{ asset: Asset }> = ({ asset }) => {
                 className="w-full object-cover"
               />
             ) : asset.type === "application/pdf" ? (
-              <div className="flex items-center justify-center w-full h-full bg-gray-200">
-                <Button
-                  variant="secondary"
-                  onClick={() => window.open(asset.storageUrl, "_blank")}
-                >
-                  <div>Download PDF</div>
-                </Button>
+              <div className="flex items-center justify-center w-full h-full bg-gray-200 aspect-square">
+                <FileText className="w-8 h-8" />
               </div>
             ) : (
               <Image
@@ -98,13 +93,8 @@ const AssetComponent: React.FC<{ asset: Asset }> = ({ asset }) => {
                     className="object-cover rounded-sm"
                   />
                 ) : asset.type === "application/pdf" ? (
-                  <div className="flex items-center justify-center w-full h-full bg-gray-200">
-                    <Button
-                      variant="secondary"
-                      onClick={() => window.open(asset.storageUrl, "_blank")}
-                    >
-                      <div>Download PDF</div>
-                    </Button>
+                  <div className="flex items-center justify-center w-full h-full bg-gray-200 aspect-square">
+                    <FileText className="w-16 h-16" />
                   </div>
                 ) : (
                   <Image

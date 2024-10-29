@@ -24,7 +24,7 @@ export default function Folios() {
       setFolios(folios);
     };
     fetchFolios();
-  }, []);
+  }, [user?.uid]);
 
   return (
     <div className="flex h-full flex-col items-center justify-start p-4 max-w-3xl mx-auto pb-20 gap-4 ">

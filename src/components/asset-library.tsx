@@ -57,7 +57,7 @@ const AssetLibrary = () => {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [user?.uid]);
 
   return (
     <div className="space-y-4 w-full">

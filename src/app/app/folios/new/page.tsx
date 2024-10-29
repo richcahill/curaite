@@ -52,7 +52,7 @@ export default function NewFolio() {
 
     const result = folioSchema.safeParse(formData);
     setIsFormValid(result.success);
-  }, [title, audience, process, readingTime]);
+  }, [title, audience, process, readingTime, folioSchema]);
 
   const handleSubmit = () => {
     if (!isFormValid) return;
