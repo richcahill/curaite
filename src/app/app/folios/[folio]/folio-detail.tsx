@@ -52,8 +52,8 @@ export default function FolioDetail({ folioUuid }: { folioUuid: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <Link href="/app/folios">Folios</Link>
-              <BreadcrumbSeparator />
             </BreadcrumbItem>
+            <BreadcrumbSeparator />
             <BreadcrumbItem>{folio?.title}</BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
