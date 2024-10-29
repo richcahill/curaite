@@ -20,6 +20,18 @@ type Folio = {
   published: boolean;
 };
 
+type ReadingTime = {
+  value: string;
+  time: string;
+};
+
+type NewFolio = {
+  title: string;
+  audience: string;
+  process: string;
+  readingTime: ReadingTime;
+};
+
 type AssetType = "image/jpeg" | "image/png" | "image/gif" | "application/pdf";
 
 type Asset = {
@@ -41,4 +53,12 @@ type AssetLibrary = {
   assets: Asset[];
 };
 
-export type { User, Folio, Asset, AssetLibrary, AssetType };
+export type {
+  User,
+  Folio,
+  Asset,
+  AssetLibrary,
+  AssetType,
+  NewFolio,
+  ReadingTime,
+};
