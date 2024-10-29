@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "./media/logo";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Package, FileImage, LogOut } from "lucide-react";
+import { Package, FileImage, LogOut, FolderDot } from "lucide-react";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -55,6 +55,15 @@ const NavigationBar: React.FC = () => {
             >
               <FileImage className="w-4 h-4" />
               <p className="">Assets</p>
+            </Link>
+            <Link
+              href="/app/projects"
+              className={
+                pathname === "/app/projects" ? activeLinkStyle : linkStyle
+              }
+            >
+              <FolderDot className="w-4 h-4" />
+              <p className="">Projects</p>
             </Link>
             <Link
               href="/app/folios"
