@@ -76,6 +76,8 @@ const FileUpload = () => {
         // Upload completed successfully
         const url = await getDownloadURL(uploadTask.snapshot.ref);
 
+        // TODO: scan the file with AI to generate metadata
+
         // use the Asset type to store the file metadata
         // Prepare metadata to store in Firestore
         const fileMetadata: Asset = {
