@@ -43,13 +43,13 @@ export default function Folios() {
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
           {folios.length === 0 ? (
             <p className="text-sm text-gray-500 font-light p-8">
               No folios found. Create new to get started.
             </p>
           ) : (
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 w-full">
               {folios
                 .filter((folio) =>
                   folio.title.toLowerCase().includes(search.toLowerCase())

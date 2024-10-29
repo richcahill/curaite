@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect, useCallback } from "react";
 import { Wand } from "lucide-react";
-import { ReadingTime } from "@/lib/types";
+import { ReadingTime, Folio } from "@/lib/types";
 import {
   Select,
   SelectContent,
@@ -15,16 +15,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { z } from "zod";
+import { auth, firestore } from "@/lib/firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 export default function NewFolio() {
+  const user = auth.currentUser;
+  // Define Zod schema for form validation
   const folioSchema = z.object({
     title: z.string().min(1, "Title is required"),
     audience: z.string().min(1, "Audience is required"),
     process: z.string().min(1, "Process is required"),
-    readingTime: z.string().min(1, "Reading time is required"),
+    readingTime: z.object({
+      value: z.string().min(1, "Reading time is required"),
+      time: z.string().min(1, "Reading time is required"),
+    }),
   });
 
-  // TODO:should use zod for validation here and make a custom hook for it
+  // State variables
   const [title, setTitle] = useState("");
   const [audience, setAudience] = useState("");
   const [process, setProcess] = useState("");
@@ -33,6 +40,11 @@ export default function NewFolio() {
     time: "3 min",
   });
 
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [generatedFolio, setGeneratedFolio] = useState<Folio | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   const readingTimes = [
     { value: "Short", time: "1 min" },
     { value: "Medium", time: "3 min" },
@@ -40,28 +52,28 @@ export default function NewFolio() {
     { value: "Very Long", time: "10 min" },
   ];
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
+  // Validate form inputs using useCallback
   const validateForm = useCallback(() => {
     const formData = {
       title,
       audience,
       process,
-      readingTime: readingTime.value,
+      readingTime,
     };
 
     const result = folioSchema.safeParse(formData);
     setIsFormValid(result.success);
   }, [title, audience, process, readingTime, folioSchema]);
 
-  const handleSubmit = () => {
+  // Update handleSubmit to send data to the API
+  const handleSubmit = async () => {
     if (!isFormValid) return;
 
     const formData = {
       title,
       audience,
       process,
-      readingTime: readingTime.value,
+      readingTime,
     };
 
     // Validate form data
@@ -75,6 +87,46 @@ export default function NewFolio() {
 
     // Proceed with form submission
     console.log("Form data is valid:", result.data);
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/llm/generate-folio", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(result.data),
+      });
+
+      const data = await response.json();
+
+      if (data.folio) {
+        // Handle the generated folio
+        console.log("Generated Folio:", data.folio);
+        try {
+          const folioDoc = doc(
+            collection(firestore, `folios/${user?.uid}/folios`)
+          );
+          await setDoc(folioDoc, data.folio);
+          setGeneratedFolio(data.folio);
+        } catch (error) {
+          console.error("Error saving folio to Firestore:", error);
+          setError("An error occurred while saving the folio.");
+        }
+      } else if (data.error) {
+        console.error("Error:", data.error);
+        setError(data.error);
+      } else {
+        console.log("Result:", data.result);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setError("An error occurred while generating the folio.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Validate form whenever inputs change
@@ -122,7 +174,9 @@ export default function NewFolio() {
             <Select
               value={readingTime.value}
               onValueChange={(value) =>
-                setReadingTime(readingTimes.find((t) => t.value === value)!)
+                setReadingTime(
+                  readingTimes.find((t) => t.value === value) || readingTime
+                )
               }
             >
               <SelectTrigger>
@@ -144,11 +198,20 @@ export default function NewFolio() {
             size="lg"
             className="w-full flex justify-between px-4 py-2 mt-8"
             onClick={handleSubmit}
-            disabled={!isFormValid}
+            disabled={!isFormValid || isLoading}
           >
-            <div>Generate</div>
+            <div>{isLoading ? "Generating..." : "Generate"}</div>
             <Wand className="w-4 h-4" />
           </Button>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
+          {generatedFolio && (
+            <div className="mt-4">
+              <h2 className="text-2xl font-medium">Generated Folio:</h2>
+              <pre className="bg-gray-100 p-4 rounded">
+                {JSON.stringify(generatedFolio, null, 2)}
+              </pre>
+            </div>
+          )}
         </div>
       </div>
     </div>

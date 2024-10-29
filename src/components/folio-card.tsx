@@ -1,11 +1,16 @@
 // using type folio from lib/types.ts
 import { type Folio } from "@/lib/types";
+import Link from "next/link";
 
 const FolioCard: React.FC<{ folio: Folio }> = ({ folio }) => {
+  console.log(folio.createdAt);
+
   return (
-    <div className="aspect-square w-full bg-gray-100 rounded-lg p-4">
-      <p className="text-sm text-gray-500 font-light">{folio.title}</p>
-    </div>
+    <Link href={`/app/folios/${folio.uuid}`}>
+      <div className="aspect-square w-full border border-gray-200 bg-white rounded-sm p-4">
+        <h2 className="text-md text-gray-900">{folio.title}</h2>
+      </div>
+    </Link>
   );
 };
 
